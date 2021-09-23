@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Frontend</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section>
+      <h1>Community Frontend</h1>
+      <!-- <h2>CSS, accessibility & more</h2> -->
+      <h2>What's new in CSS?</h2>
+    </section>
+
+    <section class="fixed">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li>
+          <a href="#css-variables">CSS Variables</a>
+        </li>
+        <li><a href="#css-houdini">CSS Houdini</a></li>
+        <li><a href="#advanced-media">Advanced @media</a></li>
+        <li><a href="#advanced-colors">Advanced colors</a></li>
+        <li><a href="#nesting-module">Nesting module</a></li>
+        <li><a href="#is-where">:is, :where</a></li>
+        <li><a href="#logical-properties">Logical properties</a></li>
+        <!-- <li><a href="#accessibility">Accessibility</a></li> -->
+        <li><a href="#stacking-context">Stacking context</a></li>
+        <li><a href="#container">@container</a></li>
+        <li><a href="#accent-color">accent-color</a></li>
+      </ol>
+    </section>
+
+    <section id="css-variables">
+      <h2 class="counter">CSS Variables</h2>
+      <p>
+        You can define variables in CSS, they can be defined at a global level
+        as well as in specific elements. You can also define fallback values.
+      </p>
+      <p>
+        Usage:<br />
+        <code>
+          :root {<br />
+          &nbsp;&nbsp;--hue: 220;<br />
+          &nbsp;&nbsp;--saturation: 60%;<br />
+          &nbsp;&nbsp;--lightness: 70%;<br />
+          &nbsp;&nbsp;--main-color: hsl(var(--hue) var(--saturation)
+          var(--lightness));<br />
+          }<br />
+          <br />
+          .text {<br />
+          &nbsp;&nbsp;color: var(--main-color, black);<br />
+          }<br />
+          <br />
+          .custom-hue {<br />
+          &nbsp;&nbsp;--hue: 100;<br />
+          &nbsp;&nbsp;--main-color: hsl(var(--hue) var(--saturation)
+          var(--lightness));<br />
+          &nbsp;&nbsp;color: var(--main-color, black);<br />
+          }
+        </code>
+      </p>
+      <p>
+        Resources:<br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/var()"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org</a
+        >
+      </p>
+    </section>
+
+    <section id="css-houdini">
+      <h2 class="counter">CSS Houdini</h2>
+      <p>
+        <code>CSS Houdini</code> is a set of APIs that expose parts of the CSS
+        engine. This makes it easier for developers to create extensions for
+        CSS. These extensions might be to polyfill features that are not yet
+        available in a browser, experiment with new ways of doing layout, or add
+        creative borders or other effects.
+      </p>
+      <p>
+        Registering a new property can make it animatable (if syntax type is
+        animatable).
+      </p>
+      <p>
+        <button class="button gradient">Hover!</button>
+        <button class="button-animation">Rainbow</button>
+      </p>
+      <p>
+        Usage:<br />
+        <code contenteditable>
+          /* in CSS */<br />
+          @property --color-stop {<br />
+          &nbsp;&nbsp;syntax: '&lt;color&gt;';<br />
+          &nbsp;&nbsp;inherits: false;<br />
+          &nbsp;&nbsp;initial-value: transparent;<br />
+          }<br />
+          <br />
+          /* or, in JS */<br />
+          CSS.registerProperty({<br />
+          &nbsp;&nbsp;name: '--color-stop',<br />
+          &nbsp;&nbsp;syntax: '&lt;color&gt;',<br />
+          &nbsp;&nbsp;inherits: false,<br />
+          &nbsp;&nbsp;initialValue: 'transparent'<br />
+          }); </code
+        ><br />
+      </p>
+      <p>
+        Resources:<br />
+        <a
+          href="https://css-houdini.rocks/"
+          rel="noopener noreferrer"
+          target="_blank"
+          >css-houdini.rocks</a
+        ><br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Houdini"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org</a
+        ><br />
+        <a
+          href="https://ishoudinireadyyet.com/"
+          rel="noopener noreferrer"
+          target="_blank"
+          >ishoudinireadyyet.com</a
+        >
+      </p>
+    </section>
+
+    <section id="advanced-media">
+      <h2 class="counter">Advanced @media</h2>
+      <section>
+        <h3>prefers-color-scheme</h3>
+        <p>
+          The <code>prefers-color-scheme</code> is used to detect if the user
+          has requested a light or dark color theme.
+        </p>
+        <div class="prefers-color-scheme-container">
+          <div class="prefers-color-scheme">With media query</div>
+          <div>Without media query</div>
+        </div>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            @media (prefers-color-scheme: dark) {<br />
+            &nbsp;&nbsp;.section { background: #333; color: white; }<br />
+            }<br />
+            <br />
+            @media (prefers-color-scheme: light) {<br />
+            &nbsp;&nbsp;.section { background: #eee; color: black; }<br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme"
+            rel="noopener noreferrer"
+            target="_blank"
+            >developer.mozilla.org</a
+          >
+        </p>
+      </section>
+
+      <section>
+        <h3>prefers-reduced-motion</h3>
+        <p>
+          The <code>prefers-reduced-motion</code> is used to detect if the user
+          has requested that the system minimize the amount of non-essential
+          motion it uses.
+        </p>
+        <div>
+          <button class="button-animation pulse">With media query</button>
+          <button class="button-animation pulse force">
+            Without media query
+          </button>
+        </div>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            @media (prefers-reduced-motion: no-preference) {<br />
+            &nbsp;&nbsp;.pulse { animation-name: pulse-animation; }<br />
+            }<br />
+            <br />
+            @media (prefers-reduced-motion: reduce) {<br />
+            &nbsp;&nbsp;.pulse { animation-name: none; <br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+            rel="noopener noreferrer"
+            target="_blank"
+            >developer.mozilla.org</a
+          >
+        </p>
+      </section>
+
+      <section>
+        <h3>prefers-reduced-data</h3>
+        <p>
+          The <code>prefers-reduced-motion</code> is used to detect if the user
+          has requested the web content that consumes less internet traffic.
+        </p>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            &lt;link rel="preload" href="font.woff2" as="font"
+            media="(prefers-reduced-data: no-preference)" crossorigin&gt;<br />
+            <br />
+            @media (prefers-reduced-data: no-preference) {<br />
+            &nbsp;&nbsp;.background { background-image: url(image4k.png); }<br />
+            }<br />
+            <br />
+            @media (prefers-reduced-data: reduce) {<br />
+            &nbsp;&nbsp;.background { background-image: url(image720.png); }<br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-data"
+            rel="noopener noreferrer"
+            target="_blank"
+            >developer.mozilla.org</a
+          >
+        </p>
+      </section>
+
+      <section>
+        <h3>color-gamut</h3>
+        <p>
+          The <code>color-gamut </code> can be used to test the approximate
+          range of colors that are supported by the user agent and the output
+          device.
+        </p>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            @media (color-gamut: srgb) {<br />
+            &nbsp;&nbsp;.background { background-color: #00FF00; }<br />
+            }<br />
+            <br />
+            @media (color-gamut: p3) {<br />
+            &nbsp;&nbsp;.background { color(display-p3 0 1 0); }<br />
+            }<br />
+            <br />
+            @media (color-gamut: rec2020) {<br />
+            &nbsp;&nbsp;.background { color(rec2020 0 1 0); }<br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut"
+            rel="noopener noreferrer"
+            target="_blank"
+            >developer.mozilla.org</a
+          >
+        </p>
+      </section>
+
+      <section>
+        <h3>Media Queries Range Context</h3>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            @media (max-width: 480px) {<br />
+            &nbsp;&nbsp;.background { background-color: black; }<br />
+            }<br />
+            @media (width <= 480px) {<br />
+            &nbsp;&nbsp;.background { background-color: black; }<br />
+            }<br />
+            <br />
+            @media (min-width: 481px) and (max-height: 1079px) {<br />
+            &nbsp;&nbsp;.background { background-color: white; }<br />
+            }<br />
+            @media (1080px > height > 480px) {<br />
+            &nbsp;&nbsp;.background { background-color: white; }<br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://drafts.csswg.org/mediaqueries-5/#mq-range-context"
+            rel="noopener noreferrer"
+            target="_blank"
+            >csswg.org</a
+          >
+        </p>
+      </section>
+
+      <section>
+        <h3>Custom Media Queries</h3>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            @custom-media --narrow-window (max-width: 30em);<br />
+            <br />
+            @media (--narrow-window) {<br />
+            &nbsp;&nbsp;.background { background-color: white; }<br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://drafts.csswg.org/mediaqueries-5/#at-ruledef-custom-media"
+            rel="noopener noreferrer"
+            target="_blank"
+            >csswg.org</a
+          >
+        </p>
+      </section>
+    </section>
+
+    <section id="advanced-colors">
+      <h2 class="counter">Advanced colors</h2>
+      <figure>
+        <picture>
+          <img src="color-gamuts.png" width="600" alt="" />
+        </picture>
+        <figcaption>Different color gamuts</figcaption>
+      </figure>
+
+      <p>
+        Resources:<br />
+        <a
+          href="https://codepen.io/argyleink/pen/WNRoymq"
+          rel="noopener noreferrer"
+          target="_blank"
+          >codepen.io/argyleink/pen/WNRoymq</a
+        >
+      </p>
+
+      <section>
+        <h3>New syntax</h3>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            rgb(0 128 255)<br />
+            <br />
+            rgb(0 128 255 / 50%)<br />
+            <br />
+            hsl(198deg 28% 50%)<br />
+            <br />
+            hsl(198deg 28% 50% / 50%)<br />
+            <br />
+            lab(56.29% -10.93 16.58 / 50%)<br />
+            <br />
+            lch(56.29% 19.86 236.62 / 50%)<br />
+            <br />
+            color(sRGB 0 0.50 1 / 50%)<br />
+            <br />
+            color(display-p3 0 0.50 1 / 50%)
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://www.w3.org/TR/css-color-4/#resolving-color-function-values"
+            rel="noopener noreferrer"
+            target="_blank"
+            >w3.org color() function</a
+          ><br />
+          <a
+            href="https://www.w3.org/TR/css-color-4/#specifying-lab-lch"
+            rel="noopener noreferrer"
+            target="_blank"
+            >w3.org lab and lch</a
+          ><br />
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/lch()"
+            rel="noopener noreferrer"
+            target="_blank"
+            >developer.mozilla.org lch</a
+          >
+        </p>  
+      </section>
+
+      <section>
+        <h3>Problem with HSL and solution with LCH</h3>
+        <figure>
+          <picture>
+            <img src="hsl.png" width="600" alt="" />
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <img src="hsl2.png" width="600" alt="" />
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <img src="hsl3.png" width="600" alt="" />
+          </picture>
+        </figure>
+        <figure>
+          <picture>
+            <img src="lch.png" width="600" alt="" />
+          </picture>
+        </figure>
+        <p>
+          Resources:<br />
+          <a
+            href="https://lea.verou.me/2020/04/lch-colors-in-css-what-why-and-how/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >lea.verou.me</a
+          ><br />
+          <a
+            href="https://css.land/lch/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >css.land/lch</a
+          >
+        </p>
+      </section>
+    </section>
+
+    <section id="nesting-module">
+      <h2 class="counter">Nesting module</h2>
+      <p>Nesting module, @nest</p>
+      <blockquote>
+        To be nest-prefixed, a nesting selector must be the first simple
+        selector in the first compound selector of the selector. If the selector
+        is a list of selectors, every complex selector in the list must be
+        nest-prefixed for the selector as a whole to nest-prefixed.
+
+        <footer>- <cite>csswg.org</cite></footer>
+      </blockquote>
+      <section>
+        <h3>&</h3>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            .foo {<br />
+            &nbsp;&nbsp;color: blue;<br />
+            &nbsp;&nbsp;& > .bar { color: red; }<br />
+            }<br />
+            /* equivalent to<br />
+            &nbsp;&nbsp;.foo { color: blue; }<br />
+            &nbsp;&nbsp;.foo > .bar { color: red; }<br />
+            */<br />
+            <br />
+            figure {<br />
+            &nbsp;&nbsp;margin: 0;<br />
+            <br />
+            &nbsp;&nbsp;& > figcaption {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;background: hsl(0 0% 0% / 50%);<br />
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;& > p {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font-size: .9rem;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+            &nbsp;&nbsp;}<br />
+            }<br />
+            /* equivalent to<br />
+            &nbsp;&nbsp;figure { margin: 0; }<br />
+            &nbsp;&nbsp;figure > figcaption { background: hsl(0 0% 0% / 50%);
+            }<br />
+            &nbsp;&nbsp;figure > figcaption > p { font-size: .9rem; }<br />
+            */
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://drafts.csswg.org/css-nesting-1/#nest-selector"
+            rel="noopener noreferrer"
+            target="_blank"
+            >csswg.org</a
+          >
+        </p>
+      </section>
+      <section>
+        <h3>@nest</h3>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            .foo {<br />
+            &nbsp;&nbsp;color: red;<br />
+            &nbsp;&nbsp;@nest .parent & {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;color: blue;<br />
+            &nbsp;&nbsp;}<br />
+            }<br />
+            /* equivalent to<br />
+            &nbsp;&nbsp;.foo { color: red; }<br />
+            &nbsp;&nbsp;.parent .foo { color: blue; }<br />
+            */<br />
+            <br />
+            .foo {<br />
+            &nbsp;&nbsp;color: red;<br />
+            &nbsp;&nbsp;@nest :not(&) {<br />
+            &nbsp;&nbsp;&nbsp;&nbsp; color: blue;<br />
+            &nbsp;&nbsp;}<br />
+            }<br />
+            /* equivalent to<br />
+            &nbsp;&nbsp;.foo { color: red; }<br />
+            &nbsp;&nbsp;:not(.foo) { color: blue; }<br />
+            */
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://drafts.csswg.org/css-nesting-1/#at-nest"
+            rel="noopener noreferrer"
+            target="_blank"
+            >csswg.org</a
+          >
+        </p>
+      </section>
+    </section>
+
+    <section id="is-where">
+      <h2 class="counter">:is, :where</h2>
+      <p>
+        The <code>:is()</code> and <code>:where()</code> functions takes a
+        selector list as its argument, and selects any element that can be
+        selected by one of the selectors in that list. This is useful for
+        writing large selectors in a more compact form.
+      </p>
+      <p>
+        The difference between <code>:where()</code> and <code>:is()</code> is
+        that <code>:where()</code> always has 0 specificity, whereas
+        <code>:is()</code> takes on the specificity of the most specific
+        selector in its arguments.
+      </p>
+      <p>
+        Usage:<br />
+        <code contenteditable>
+          header p:hover,<br />
+          main p:hover,<br />
+          footer p:hover {<br />
+          &nbsp;&nbsp;color: red;<br />
+          &nbsp;&nbsp;cursor: pointer;<br />
+          }<br />
+          <br />
+          :where(header, main, footer) p:hover {<br />
+          &nbsp;&nbsp;color: red;<br />
+          &nbsp;&nbsp;cursor: pointer;<br />
+          }<br />
+          <br />
+          <br />
+          ol ol ul, ol ul ul, ol menu ul, ol dir ul,<br />
+          ol ol menu, ol ul menu, ol menu menu, ol dir menu,<br />
+          ol ol dir, ol ul dir, ol menu dir, ol dir dir,<br />
+          ul ol ul, ul ul ul, ul menu ul, ul dir ul,<br />
+          ul ol menu, ul ul menu, ul menu menu, ul dir menu,<br />
+          ul ol dir, ul ul dir, ul menu dir, ul dir dir,<br />
+          menu ol ul, menu ul ul, menu menu ul, menu dir ul,<br />
+          menu ol menu, menu ul menu, menu menu menu, menu dir menu,<br />
+          menu ol dir, menu ul dir, menu menu dir, menu dir dir,<br />
+          dir ol ul, dir ul ul, dir menu ul, dir dir ul,<br />
+          dir ol menu, dir ul menu, dir menu menu, dir dir menu,<br />
+          dir ol dir, dir ul dir, dir menu dir, dir dir dir {<br />
+          &nbsp;&nbsp;list-style-type: square;<br />
+          }<br />
+          <br />
+          :is(ol, ul, menu, dir) :is(ol, ul, menu, dir) :is(ul, menu, dir) {<br />
+          &nbsp;&nbsp;list-style-type: square;<br />
+          }
+        </code>
+      </p>
+      <p>
+        Resources:<br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/:is"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org :is</a
+        ><br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/:where"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org :where</a
+        >
+      </p>
+
+      <section>
+        <h3>Custom Selectors</h3>
+        <p>
+          Usage:<br />
+          <code contenteditable>
+            @custom-selector :--heading h1, h2, h3, h4, h5, h6;<br />
+            <br />
+            article :--heading + p {<br />
+            &nbsp;&nbsp;background-color: white;<br />
+            }
+          </code>
+        </p>
+        <p>
+          Resources:<br />
+          <a
+            href="https://drafts.csswg.org/css-extensions/#custom-selectors"
+            rel="noopener noreferrer"
+            target="_blank"
+            >csswg.org</a
+          >
+        </p>
+      </section>
+    </section>
+
+    <section id="logical-properties">
+      <h2 class="counter">Logical properties</h2>
+      <p>
+        Resources:<br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org</a
+        >
+      </p>
+    </section>
+
+    <!-- <section id="accessibility">
+      <h2 class="counter">Accessibility</h2>
+      <p>Accessibility, outline, :focus-visible</p>
+    </section> -->
+
+    <section id="stacking-context">
+      <h2 class="counter">Stacking context</h2>
+      <p>
+        Resources:<br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org stacking context</a
+        ><br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/isolation"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org isolation</a
+        >
+      </p>
+    </section>
+
+    <section id="container">
+      <h2 class="counter">@container</h2>
+      <p>
+        Resources:<br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org</a
+        >
+      </p>
+    </section>
+
+    <section id="accent-color">
+      <h2 class="counter">accent-color</h2>
+      <p>
+        <code>accent-color</code> is a new CSS property that allows you to
+        change the color of native inputs, the background color will
+        automatically change to dark when needed.
+      </p>
+      <div class="grid--3-columns">
+        <fieldset class="grid">
+          <legend>Checkbox examples</legend>
+          <label>Checkbox one<input type="checkbox" checked /></label>
+          <label
+            >Checkbox two<input type="checkbox" id="indeterminate"
+          /></label>
+          <script>
+            const indeterminateInput = document.querySelector("#indeterminate");
+            indeterminateInput.indeterminate = true;
+          </script>
+          <label>Checkbox three<input type="checkbox" /></label>
+        </fieldset>
+
+        <fieldset class="grid">
+          <legend>Radio button example</legend>
+          <label
+            >Radio Buttons<input type="radio" name="radio" checked
+          /></label>
+          <label>Radio two<input type="radio" name="radio" /></label>
+          <label>Radio three<input type="radio" name="radio" /></label>
+        </fieldset>
+
+        <fieldset class="grid">
+          <legend>Range slider, progress</legend>
+          <input type="range" />
+          <progress max="100" value="50">50%</progress>
+        </fieldset>
+      </div>
+      <p>
+        Usage:<br />
+        <code contenteditable>
+          input {<br />
+          &nbsp;&nbsp;accent-color: &lt;color&gt;;<br />
+          } </code
+        ><br />
+      </p>
+      <p>
+        Resources:<br />
+        <a
+          href="https://web.dev/accent-color/"
+          rel="noopener noreferrer"
+          target="_blank"
+          >web.dev/accent-color</a
+        ><br />
+        <a
+          href="https://accent-color.glitch.me/"
+          rel="noopener noreferrer"
+          target="_blank"
+          >accent-color.glitch.me</a
+        ><br />
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color"
+          rel="noopener noreferrer"
+          target="_blank"
+          >developer.mozilla.org</a
+        >
+      </p>
+    </section>
+  </body>
+</html>
